@@ -144,7 +144,10 @@ main {
 
 .vans-wrapper {
 	padding: 0 20px;
-	/* overflow-x: hidden; */
+}
+
+.vans-wrapper * {
+	text-decoration: none;
 }
 
 .vans-explore-box {
@@ -186,6 +189,7 @@ main {
 
 .van-tile {
 	margin-bottom: 30px;
+	color: black;
 }
 
 .van-tile img {

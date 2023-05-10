@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import "../App.css";
 
 function Vans() {
@@ -11,19 +12,21 @@ function Vans() {
 	}, []);
 
 	const vanElements = vansData.map((van) => (
-		<div key={van.id} className="van-tile">
-			<img src={van.imageUrl} />
-			<div className="van-info">
-				<h3>{van.name}</h3>
-				<p>
-					${van.price}
-					<span>/day</span>
-				</p>
+		<Link to={`/vans/${van.id}`} key={van.id}>
+			<div className="van-tile">
+				<img src={van.imageUrl} />
+				<div className="van-info">
+					<h3>{van.name}</h3>
+					<p>
+						${van.price}
+						<span>/day</span>
+					</p>
+				</div>
+				<i className={`van-type ${van.type} selected`}>
+					{van.type.charAt(0).toUpperCase() + van.type.slice(1)}
+				</i>
 			</div>
-			<i className={`van-type ${van.type} selected`}>
-				{van.type.charAt(0).toUpperCase() + van.type.slice(1)}
-			</i>
-		</div>
+		</Link>
 	));
 
 	return (
