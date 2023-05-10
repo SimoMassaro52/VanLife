@@ -40,13 +40,20 @@ nav {
 	color: black;
 }
 
+.nav-links > *:hover {
+	text-decoration: underline;
+}
+
 /* Home */
 
+main {
+	margin: 100px 0;
+}
+
 .home-hero {
-	margin-top: 100px;
 	height: 100vh;
 	z-index: -1;
-	background-image: url("../public/home-bg.png");
+	background-image: url("./assets/home-bg.png");
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center;
@@ -84,12 +91,11 @@ nav {
 /* About */
 
 .about-wrapper {
-	margin-top: 100px;
 	height: 100vh;
 }
 
 .about-hero {
-	background-image: url("../public/about-hero.png");
+	background-image: url("./assets/about-hero.png");
 	min-height: 230px;
 	width: 100%;
 	background-repeat: no-repeat;
@@ -132,6 +138,102 @@ nav {
 	font-size: 14px;
 	margin: 15px 0;
 	border: none;
+}
+
+/* Vans */
+
+.vans-wrapper {
+	padding: 0 20px;
+	/* overflow-x: hidden; */
+}
+
+.vans-explore-box {
+	margin: 130px 0 70px 0;
+}
+
+.vans-explore-box h1 {
+	margin-bottom: 20px;
+}
+
+.explore-filters-box {
+	display: flex;
+	align-items: center;
+	gap: 3%;
+}
+
+.explore-filters-box button {
+	background-color: #ffead0;
+	border: none;
+	border-radius: 5px;
+}
+
+.explore-filters-box > * {
+	font-size: 16px;
+	padding: 8px 20px;
+	font-weight: 500;
+}
+
+.explore-filters-box p {
+	text-decoration: underline;
+	min-width: 135px;
+}
+
+.van-tiles-box {
+	display: flex;
+	gap: 9%;
+	flex-wrap: wrap;
+}
+
+.van-tile {
+	margin-bottom: 30px;
+}
+
+.van-tile img {
+	width: 200px;
+	height: 200px;
+	border-radius: 5px;
+}
+
+.van-info {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 10px;
+}
+
+.van-info h3 {
+	font-size: 18px;
+}
+
+.van-info p {
+	display: flex;
+	flex-direction: column;
+	font-weight: bold;
+	font-size: 18px;
+}
+
+.van-info span {
+	font-weight: normal;
+	font-size: 14px;
+}
+
+.van-type {
+	font-style: normal;
+	color: #ffead0;
+	font-size: 15px;
+	padding: 8px 15px;
+	border-radius: 5px;
+}
+
+.simple {
+	background-color: #e17654;
+}
+
+.rugged {
+	background-color: #115e59;
+}
+
+.luxury {
+	background-color: #161616;
 }
 
 /* Footer */
