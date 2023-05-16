@@ -8,7 +8,7 @@
 
 /* Navbar */
 
-nav {
+.main-nav {
 	position: fixed;
 	width: 100%;
 	top: 0;
@@ -38,10 +38,17 @@ nav {
 	padding: 0 15px 0 15px;
 	font-size: 15px;
 	text-decoration: none;
-	color: black;
+	color: #4d4d4d;
+	font-weight: 600;
 }
 
 .nav-links > *:hover {
+	color: black;
+	text-decoration: underline;
+}
+
+.link-selected {
+	color: black;
 	text-decoration: underline;
 }
 
@@ -312,4 +319,19 @@ footer {
 	color: #aaaaaa;
 	font-size: 14px;
 	font-weight: 500;
+}
+
+/* Host Navbar */
+
+.host-nav {
+	width: 100%;
+	top: 100px;
+	left: 0;
+	display: flex;
+	justify-content: space-between;
+	height: 100px;
+	align-items: center;
+	overflow: hidden;
+	z-index: 1;
+	background-color: white;
 }

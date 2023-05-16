@@ -3,9 +3,7 @@ import "../../App.css";
 function Reviews() {
 	return (
 		<>
-			<main>
-				<h1>Reviews</h1>
-			</main>
+			<h1>Reviews</h1>
 		</>
 	);
 }

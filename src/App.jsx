@@ -13,6 +13,7 @@ import Reviews from "./pages/Host/Reviews";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
+import HostLayout from "./components/HostLayout";
 
 //The App component will be dedicated exclusively to the Browser Router so we are going to take out of it any actual components and use the Layout nested route to be our page layout blueprint
 
@@ -21,15 +22,18 @@ function App() {
 		<>
 			<BrowserRouter>
 				<Routes>
-					<Route element={<Layout />}>
-						<Route path="/" element={<Home />} />
-						<Route path="/about" element={<About />} />
-						<Route path="/vans" element={<Vans />} />
-						<Route path="/vans/:id" element={<VanDetail />} />
+					{/* Generally, nesting is used to avoid repetition or to display recurring UI elements such as nav elements*/}
+					<Route path="/" element={<Layout />}>
+						{/* To display a sort of default route as the first element present in a given parent route, we need to add the index prop to that route and it will know to appear before anything else following the parent's path */}
+						<Route index element={<Home />} />
+						<Route path="about" element={<About />} />
+						<Route path="vans" element={<Vans />} />
+						<Route path="vans/:id" element={<VanDetail />} />
 
-						<Route path="/host" element={<Dashboard />}>
-							<Route path="/host/income" element={<Income />} />
-							<Route path="/host/reviews" element={<Reviews />} />
+						<Route path="host" element={<HostLayout />}>
+							<Route index element={<Dashboard />} />
+							<Route path="income" element={<Income />} />
+							<Route path="reviews" element={<Reviews />} />
 						</Route>
 					</Route>
 				</Routes>
