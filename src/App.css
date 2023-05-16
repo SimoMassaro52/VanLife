@@ -48,7 +48,7 @@ nav {
 /* Home */
 
 main {
-	margin: 140px 0;
+	margin: 100px 0 75px 0;
 }
 
 .home-hero {
@@ -244,6 +244,7 @@ main {
 /* Van details */
 
 .single-van-wrapper {
+	margin-top: 140px;
 	padding: 0 20px;
 }
 

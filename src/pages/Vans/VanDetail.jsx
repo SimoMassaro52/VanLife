@@ -1,4 +1,4 @@
-import "../App.css";
+import "../../App.css";
 
 //Params function import
 import { useParams } from "react-router-dom";
