@@ -13,7 +13,7 @@ function VanDetail() {
 	useEffect(() => {
 		fetch(`/api/vans/${params.id}`)
 			.then((res) => res.json())
-			.then((data) => console.log(data.vans));
+			.then((data) => setVan(data.vans));
 		//We want to rerun the fetch request only if the id changes
 	}, [params.id]);
 	return (

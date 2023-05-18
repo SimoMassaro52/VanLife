@@ -1,5 +1,5 @@
 import "../../App.css";
-import { useParams, Link, Outlet } from "react-router-dom";
+import { useParams, Link, Outlet, NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -43,7 +43,29 @@ function HostVanDetail() {
 								</p>
 							</div>
 						</div>
-						<Outlet />
+						<nav className="detail-navbar">
+							<NavLink
+								to="."
+								end
+								className={(obj) => (obj.isActive ? "link-selected" : null)}
+							>
+								Details
+							</NavLink>
+							<NavLink
+								to="pricing"
+								className={(obj) => (obj.isActive ? "link-selected" : null)}
+							>
+								Pricing
+							</NavLink>
+							<NavLink
+								to="photos"
+								className={(obj) => (obj.isActive ? "link-selected" : null)}
+							>
+								Photos
+							</NavLink>
+						</nav>
+						{/* To pass data to the child route we can use something similar to prop passing called the "context" attribute by passing the desired state */}
+						<Outlet context={[van, setVan]} />
 					</div>
 				) : (
 					<h2>Loading...</h2>
