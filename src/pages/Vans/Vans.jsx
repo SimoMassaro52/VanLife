@@ -6,7 +6,7 @@ function Vans() {
 	const [vansData, setVansData] = useState([]);
 
 	useEffect(() => {
-		fetch("api/vans")
+		fetch("/api/vans")
 			.then((res) => res.json())
 			.then((data) => setVansData(data.vans));
 	}, []);

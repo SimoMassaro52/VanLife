@@ -1,12 +1,11 @@
 import "../../App.css";
 
 //Params function import
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
 
 function VanDetail() {
 	const params = useParams();
@@ -14,10 +13,9 @@ function VanDetail() {
 	useEffect(() => {
 		fetch(`/api/vans/${params.id}`)
 			.then((res) => res.json())
-			.then((data) => setVan(data.vans));
+			.then((data) => console.log(data.vans));
 		//We want to rerun the fetch request only if the id changes
 	}, [params.id]);
-	console.log(van);
 	return (
 		<>
 			<main className="single-van-wrapper">

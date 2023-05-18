@@ -1,5 +1,5 @@
 import "../App.css";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 function Navbar() {
 	return (
@@ -9,9 +9,24 @@ function Navbar() {
 					<Link to="/">#VANLIFE</Link>
 				</div>
 				<div className="nav-links">
-					<Link to="/host">Host</Link>
-					<Link to="/about">About</Link>
-					<Link to="/vans">Vans</Link>
+					<NavLink
+						to="/host"
+						className={(obj) => (obj.isActive ? "link-selected" : null)}
+					>
+						Host
+					</NavLink>
+					<NavLink
+						to="/about"
+						className={(obj) => (obj.isActive ? "link-selected" : null)}
+					>
+						About
+					</NavLink>
+					<NavLink
+						to="/vans"
+						className={(obj) => (obj.isActive ? "link-selected" : null)}
+					>
+						Vans
+					</NavLink>
 				</div>
 			</nav>
 		</>
