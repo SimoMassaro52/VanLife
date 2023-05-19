@@ -6,6 +6,10 @@
 	font-family: "Inter";
 }
 
+body {
+	background-color: #fff7ed;
+}
+
 a {
 	text-decoration: none;
 }

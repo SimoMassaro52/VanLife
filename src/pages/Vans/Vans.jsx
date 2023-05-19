@@ -7,9 +7,7 @@ function Vans() {
 
 	const [searchParams, setSearchParams] = useSearchParams();
 
-	let typeFilter = searchParams.get("type");
-
-	console.log(typeFilter);
+	const typeFilter = searchParams.get("type");
 
 	useEffect(() => {
 		fetch("/api/vans")
@@ -17,7 +15,11 @@ function Vans() {
 			.then((data) => setVansData(data.vans));
 	}, []);
 
-	const vanElements = vansData.map((van) => (
+	const filteredVans = typeFilter
+		? vansData.filter((van) => van.type === typeFilter)
+		: vansData;
+
+	const vanElements = filteredVans.map((van) => (
 		<Link to={`/vans/${van.id}`} key={van.id}>
 			<div className="van-tile">
 				<img src={van.imageUrl} />
