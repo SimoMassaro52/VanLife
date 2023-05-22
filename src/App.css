@@ -181,10 +181,25 @@ main {
 	gap: 3%;
 }
 
-.explore-filters-box button {
+.explore-filters-box button:not(:last-child) {
 	background-color: #ffead0;
 	border: none;
 	border-radius: 5px;
+	color: black;
+}
+
+.explore-filters-box button:not(:last-child):hover {
+	color: #ffead0 !important;
+	transition: 0.3s;
+	cursor: pointer;
+}
+
+.explore-filters-box button:last-child {
+	color: black;
+	text-decoration: underline;
+	border: none;
+	background-color: transparent;
+	cursor: pointer;
 }
 
 .explore-filters-box > * {
@@ -255,6 +270,18 @@ main {
 
 .luxury {
 	background-color: #161616;
+}
+
+.filter-sim:hover {
+	background-color: #e17654 !important;
+}
+
+.filter-lux:hover {
+	background-color: #161616 !important;
+}
+
+.filter-rug:hover {
+	background-color: #115e59 !important;
 }
 
 /* Van details */

@@ -43,10 +43,25 @@ function Vans() {
 				<div className="vans-explore-box">
 					<h1>Explore our van options</h1>
 					<div className="explore-filters-box">
-						<button>Simple</button>
-						<button>Luxury</button>
-						<button>Rugged</button>
-						<p>Clear filters</p>
+						<button
+							onClick={() => setSearchParams({ type: "simple" })}
+							className="filter-sim"
+						>
+							Simple
+						</button>
+						<button
+							onClick={() => setSearchParams({ type: "luxury" })}
+							className="filter-lux"
+						>
+							Luxury
+						</button>
+						<button
+							onClick={() => setSearchParams({ type: "rugged" })}
+							className="filter-rug"
+						>
+							Rugged
+						</button>
+						<button onClick={() => setSearchParams({})}>Clear filters</button>
 					</div>
 				</div>
 				<div className="van-tiles-box">{vanElements}</div>
