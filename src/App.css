@@ -528,3 +528,31 @@ footer {
 .host-van-photos-box img {
 	width: 120px;
 }
+
+/* 404 page */
+
+.error-wrapper {
+	margin-top: 200px;
+	padding: 30px;
+}
+
+.error-wrapper div {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.error-btn {
+	background-color: black;
+	font-weight: 700;
+	border-radius: 5px;
+	color: white;
+	height: 40px;
+	max-width: 300px;
+	width: 300px;
+	margin: 30px 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 16px;
+}
