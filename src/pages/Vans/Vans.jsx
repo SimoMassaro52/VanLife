@@ -20,7 +20,12 @@ function Vans() {
 		: vansData;
 
 	const vanElements = filteredVans.map((van) => (
-		<Link to={`/vans/${van.id}`} key={van.id}>
+		<Link
+			to={van.id}
+			key={van.id}
+			// state prop for passing the filter and keep it so that when the user goes back he keeps his filtering. It is of course an object containing the stringified URL query params
+			state={{ search: searchParams.toString() }}
+		>
 			<div className="van-tile">
 				<img src={van.imageUrl} />
 				<div className="van-info">
@@ -30,7 +35,7 @@ function Vans() {
 						<span>/day</span>
 					</p>
 				</div>
-				<i className={`van-type ${van.type} selected`}>
+				<i className={`van-type ${van.type}`}>
 					{van.type.charAt(0).toUpperCase() + van.type.slice(1)}
 				</i>
 			</div>
@@ -45,23 +50,35 @@ function Vans() {
 					<div className="explore-filters-box">
 						<button
 							onClick={() => setSearchParams({ type: "simple" })}
-							className="filter-sim"
+							className={`filter-sim ${
+								typeFilter == "simple" ? "selected" : ""
+							}`}
 						>
 							Simple
 						</button>
 						<button
 							onClick={() => setSearchParams({ type: "luxury" })}
-							className="filter-lux"
+							className={`filter-lux ${
+								typeFilter == "luxury" ? "selected" : ""
+							}`}
 						>
 							Luxury
 						</button>
 						<button
 							onClick={() => setSearchParams({ type: "rugged" })}
-							className="filter-rug"
+							className={`filter-rug ${
+								typeFilter == "rugged" ? "selected" : ""
+							}`}
 						>
 							Rugged
 						</button>
-						<button onClick={() => setSearchParams({})}>Clear filters</button>
+						{typeFilter !== null ? (
+							<button className="clear-btn" onClick={() => setSearchParams({})}>
+								Clear filters
+							</button>
+						) : (
+							""
+						)}
 					</div>
 				</div>
 				<div className="van-tiles-box">{vanElements}</div>

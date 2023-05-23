@@ -181,25 +181,57 @@ main {
 	gap: 3%;
 }
 
-.explore-filters-box button:not(:last-child) {
+.filter-sim,
+.filter-lux,
+.filter-rug {
 	background-color: #ffead0;
 	border: none;
 	border-radius: 5px;
 	color: black;
 }
 
-.explore-filters-box button:not(:last-child):hover {
+.filter-sim:hover,
+.filter-lux:hover,
+.filter-rug:hover {
 	color: #ffead0 !important;
 	transition: 0.3s;
 	cursor: pointer;
 }
 
-.explore-filters-box button:last-child {
+.filter-sim:hover {
+	background-color: #e17654 !important;
+}
+
+.filter-lux:hover {
+	background-color: #161616 !important;
+}
+
+.filter-rug:hover {
+	background-color: #115e59 !important;
+}
+
+.filter-sim.selected {
+	background-color: #e17654;
+	color: #ffead0;
+}
+
+.filter-lux.selected {
+	background-color: #161616;
+	color: #ffead0;
+}
+
+.filter-rug.selected {
+	background-color: #115e59;
+	color: #ffead0;
+}
+
+.explore-filters-box .clear-btn {
 	color: black;
 	text-decoration: underline;
 	border: none;
 	background-color: transparent;
 	cursor: pointer;
+	min-width: 128.5px;
 }
 
 .explore-filters-box > * {
@@ -271,19 +303,6 @@ main {
 .luxury {
 	background-color: #161616;
 }
-
-.filter-sim:hover {
-	background-color: #e17654 !important;
-}
-
-.filter-lux:hover {
-	background-color: #161616 !important;
-}
-
-.filter-rug:hover {
-	background-color: #115e59 !important;
-}
-
 /* Van details */
 
 .single-van-wrapper {
