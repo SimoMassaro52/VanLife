@@ -1,6 +1,6 @@
 //Dummy server to perform the fetch request made with mirage JS
 
-import { createServer, Model } from "miragejs";
+import { createServer, Model, Response } from "miragejs";
 
 createServer({
 	models: {
@@ -80,7 +80,9 @@ createServer({
 		this.logging = false;
 
 		this.get("/vans", (schema, request) => {
-			return schema.vans.all();
+			// return schema.vans.all();
+			//Error simulation
+			return new Response(400, {}, { error: "Error fetching data" });
 		});
 
 		this.get("/vans/:id", (schema, request) => {

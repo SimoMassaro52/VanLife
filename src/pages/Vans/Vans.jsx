@@ -1,46 +1,52 @@
-import { useState, useEffect } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams, useLoaderData } from "react-router-dom";
 import "../../App.css";
+//Import of the async function that makes the fetch request in api.js
+import { getVans } from "../../api";
+import { useEffect } from "react";
+
+export function loader() {
+	return getVans();
+}
 
 function Vans() {
-	const [vansData, setVansData] = useState([]);
-
+	// const [vansData, setVansData] = useState([]);
 	const [searchParams, setSearchParams] = useSearchParams();
-
 	const typeFilter = searchParams.get("type");
 
-	useEffect(() => {
-		fetch("/api/vans")
-			.then((res) => res.json())
-			.then((data) => setVansData(data.vans));
-	}, []);
+	//We won't need to use a useEffect() anymore
+	const vansData = useLoaderData();
+	let filteredVans = [];
+	let vanElements = [];
 
-	const filteredVans = typeFilter
-		? vansData.filter((van) => van.type === typeFilter)
-		: vansData;
+	if (vansData.length > 0) {
+		filteredVans = typeFilter
+			? vansData.filter((van) => van.type === typeFilter)
+			: vansData;
+	}
 
-	const vanElements = filteredVans.map((van) => (
-		<Link
-			to={van.id}
-			key={van.id}
-			// state prop for passing the filter and keep it so that when the user goes back he keeps his filtering. It is of course an object containing the stringified URL query params
-			state={{ search: searchParams.toString() }}
-		>
-			<div className="van-tile">
-				<img src={van.imageUrl} />
-				<div className="van-info">
-					<h3>{van.name}</h3>
-					<p>
-						${van.price}
-						<span>/day</span>
-					</p>
+	if (filteredVans.length > 0) {
+		vanElements = filteredVans.map((van) => (
+			<Link
+				to={van.id}
+				key={van.id}
+				state={{ search: searchParams.toString() }}
+			>
+				<div className="van-tile">
+					<img src={van.imageUrl} />
+					<div className="van-info">
+						<h3>{van.name}</h3>
+						<p>
+							${van.price}
+							<span>/day</span>
+						</p>
+					</div>
+					<i className={`van-type ${van.type}`}>
+						{van.type.charAt(0).toUpperCase() + van.type.slice(1)}
+					</i>
 				</div>
-				<i className={`van-type ${van.type}`}>
-					{van.type.charAt(0).toUpperCase() + van.type.slice(1)}
-				</i>
-			</div>
-		</Link>
-	));
+			</Link>
+		));
+	}
 
 	return (
 		<>
