@@ -2,7 +2,6 @@ import { Link, useSearchParams, useLoaderData } from "react-router-dom";
 import "../../App.css";
 //Import of the async function that makes the fetch request in api.js
 import { getVans } from "../../api";
-import { useEffect } from "react";
 
 export function loader() {
 	return getVans();

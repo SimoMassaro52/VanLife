@@ -1,35 +1,25 @@
 import "../../App.css";
 
-//Params function import
-import {
-	useParams,
-	Link,
-	// New hook for receiving the location data
-	useLocation,
-} from "react-router-dom";
-import { useState, useEffect } from "react";
+//Code has been refactored to accomodate loader functions
+import { getVans } from "../../api";
+import { useParams, Link, useLocation, useLoaderData } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
-function VanDetail() {
-	const params = useParams();
+//Since we need access to the vans id we want to display, loaders has access to an object called params that receives the data from the parent route
+export function loader({ params }) {
+	return getVans(params.id);
+}
+
+export default function VanDetail() {
 	const location = useLocation();
-	// Location is an object with a lot of useful properties. In this case we are going to take advantage of the search object in the state property
-	// console.log(location);
-	const [van, setVan] = useState(null);
-	useEffect(() => {
-		fetch(`/api/vans/${params.id}`)
-			.then((res) => res.json())
-			.then((data) => setVan(data.vans));
-		//We want to rerun the fetch request only if the id changes
-	}, [params.id]);
+	const van = useLoaderData();
 
 	return (
 		<>
 			<main className="single-van-wrapper">
 				<Link
-					//We are getting back to the all vans page and if the state has been defined then we will keep the search params. We need to add the question mark
 					to={`..${
 						location.state.search !== "" ? "?" + location.state.search : ""
 					}`}
@@ -45,30 +35,25 @@ function VanDetail() {
 						vans
 					</p>
 				</Link>
-				{van ? (
-					<div className="van-detail">
-						<img src={van.imageUrl} />
-						<div className="van-detail-txt">
-							<div>
-								<i className={`van-type ${van.type}`}>
-									{van.type.charAt(0).toUpperCase() + van.type.slice(1)}
-								</i>
-							</div>
-							<h2>{van.name}</h2>
-							<p className="van-price">
-								${van.price}
-								<span>/day</span>
-							</p>
-							<p>{van.description}</p>
-							<button className="home-btn">Rent this van</button>
+				{/* We can also get rid of the ternary since we are 100% sure the page will check if it has the correct data before actually rendering*/}
+				<div className="van-detail">
+					<img src={van.imageUrl} />
+					<div className="van-detail-txt">
+						<div>
+							<i className={`van-type ${van.type}`}>
+								{van.type.charAt(0).toUpperCase() + van.type.slice(1)}
+							</i>
 						</div>
+						<h2>{van.name}</h2>
+						<p className="van-price">
+							${van.price}
+							<span>/day</span>
+						</p>
+						<p>{van.description}</p>
+						<button className="home-btn">Rent this van</button>
 					</div>
-				) : (
-					<h2>Loading...</h2>
-				)}
+				</div>
 			</main>
 		</>
 	);
 }
-
-export default VanDetail;

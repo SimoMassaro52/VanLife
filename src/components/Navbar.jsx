@@ -1,5 +1,7 @@
 import "../App.css";
 import { Link, NavLink } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
 
 function Navbar() {
 	return (
@@ -26,6 +28,9 @@ function Navbar() {
 						className={(obj) => (obj.isActive ? "link-selected" : null)}
 					>
 						Vans
+					</NavLink>
+					<NavLink className="user-ico-nav">
+						<FontAwesomeIcon icon={faCircleUser} />
 					</NavLink>
 				</div>
 			</nav>

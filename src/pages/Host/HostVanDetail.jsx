@@ -1,19 +1,25 @@
 import "../../App.css";
-import { useParams, Link, Outlet, NavLink } from "react-router-dom";
+import {
+	useParams,
+	Link,
+	Outlet,
+	NavLink,
+	useLoaderData,
+} from "react-router-dom";
 import { useState, useEffect } from "react";
+
+//Code has been refactored to accomodate loaders
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { getHostVans } from "../../api";
 
-function HostVanDetail() {
-	const params = useParams();
-	const [van, setVan] = useState(null);
-	useEffect(() => {
-		fetch(`/api/host/vans/${params.id}`)
-			.then((res) => res.json())
-			.then((data) => setVan(...data.vans));
-	}, [params.id]);
+export function loader({ params }) {
+	return getHostVans(params.id);
+}
 
+export default function HostVanDetail() {
+	const [van] = useLoaderData();
 	return (
 		<>
 			<section className="single-host-van-wrapper">
@@ -26,53 +32,47 @@ function HostVanDetail() {
 					<FontAwesomeIcon icon={faArrowLeft} />
 					<p>Back to all your vans</p>
 				</Link>
-				{van ? (
-					<div className="host-van-detail">
-						<div className="host-van-img-box">
-							<img src={van.imageUrl} />
-							<div className="host-van-detail-box">
-								<div>
-									<i className={`van-type ${van.type}`}>
-										{van.type.charAt(0).toUpperCase() + van.type.slice(1)}
-									</i>
-								</div>
-								<h2>{van.name}</h2>
-								<p className="van-price">
-									${van.price}
-									<span>/day</span>
-								</p>
+				<div className="host-van-detail">
+					<div className="host-van-img-box">
+						<img src={van.imageUrl} />
+						<div className="host-van-detail-box">
+							<div>
+								<i className={`van-type ${van.type}`}>
+									{van.type.charAt(0).toUpperCase() + van.type.slice(1)}
+								</i>
 							</div>
+							<h2>{van.name}</h2>
+							<p className="van-price">
+								${van.price}
+								<span>/day</span>
+							</p>
 						</div>
-						<nav className="detail-navbar">
-							<NavLink
-								to="."
-								end
-								className={(obj) => (obj.isActive ? "link-selected" : null)}
-							>
-								Details
-							</NavLink>
-							<NavLink
-								to="pricing"
-								className={(obj) => (obj.isActive ? "link-selected" : null)}
-							>
-								Pricing
-							</NavLink>
-							<NavLink
-								to="photos"
-								className={(obj) => (obj.isActive ? "link-selected" : null)}
-							>
-								Photos
-							</NavLink>
-						</nav>
-						{/* To pass data to the child route we can use something similar to prop passing called the "context" attribute by passing the desired state */}
-						<Outlet context={[van, setVan]} />
 					</div>
-				) : (
-					<h2>Loading...</h2>
-				)}
+					<nav className="detail-navbar">
+						<NavLink
+							to="."
+							end
+							className={(obj) => (obj.isActive ? "link-selected" : null)}
+						>
+							Details
+						</NavLink>
+						<NavLink
+							to="pricing"
+							className={(obj) => (obj.isActive ? "link-selected" : null)}
+						>
+							Pricing
+						</NavLink>
+						<NavLink
+							to="photos"
+							className={(obj) => (obj.isActive ? "link-selected" : null)}
+						>
+							Photos
+						</NavLink>
+					</nav>
+					{/* To pass data to the child route we can use something similar to prop passing called the "context" attribute by passing the desired state */}
+					<Outlet context={[van]} />
+				</div>
 			</section>
 		</>
 	);
 }
-
-export default HostVanDetail;
