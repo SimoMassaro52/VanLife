@@ -29,7 +29,12 @@ function Navbar() {
 					>
 						Vans
 					</NavLink>
-					<NavLink className="user-ico-nav">
+					<NavLink
+						to="/login"
+						className={(obj) =>
+							`user-ico-nav ${obj.isActive ? "link-selected" : ""}`
+						}
+					>
 						<FontAwesomeIcon icon={faCircleUser} />
 					</NavLink>
 				</div>

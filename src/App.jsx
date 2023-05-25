@@ -12,6 +12,8 @@ import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import About from "./pages/About";
+import Login from "./pages/Login";
+
 //We can import the loader function and change its name in the context of the master component App.jsx to be more specific
 import Vans, { loader as vansLoader } from "./pages/Vans/Vans";
 import VanDetail, { loader as vanDetailLoader } from "./pages/Vans/VanDetail";
@@ -30,6 +32,11 @@ import HostVanDetail, {
 import HostVanInfo from "./pages/Host/Hostvan/HostVanInfo";
 import HostVanPricing from "./pages/Host/Hostvan/HostVanPricing";
 import HostVanPhotos from "./pages/Host/Hostvan/HostVanPhotos";
+
+//Since we want to check for authentication in multiple routes, we can create a utility function that will check if the user is logged in and paste it in each route. We are going to store our utility function in a separate JS file to avoid bulky code
+import { requireAuth } from "./utils";
+
+console.log(requireAuth());
 
 function App() {
 	const router = createBrowserRouter(
@@ -51,20 +58,13 @@ function App() {
 					element={<VanDetail />}
 					loader={vanDetailLoader}
 				/>
+				<Route path="login" element={<Login />} />
 
-				<Route
-					path="host"
-					element={<HostLayout />}
-					loader={async () => {
-						return null;
-					}}
-				>
+				<Route path="host" element={<HostLayout />}>
 					<Route
 						index
 						element={<Dashboard />}
-						loader={async () => {
-							return null;
-						}}
+						loader={async () => await requireAuth()}
 					/>
 					<Route
 						path="income"
