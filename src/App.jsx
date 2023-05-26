@@ -6,6 +6,7 @@ import {
 	createBrowserRouter,
 	//A super useful method for avoiding writing the extensive array of object if we have the route elements already defined is createRoutesFromElements
 	createRoutesFromElements,
+	redirect,
 } from "react-router-dom";
 
 import Layout from "./components/Layout";
@@ -66,48 +67,18 @@ function App() {
 						element={<Dashboard />}
 						loader={async () => await requireAuth()}
 					/>
-					<Route
-						path="income"
-						element={<Income />}
-						loader={async () => {
-							return null;
-						}}
-					/>
+					<Route path="income" element={<Income />} />
 					<Route path="vans" element={<HostVans />} loader={hostVansLoader} />
 					<Route
 						path="vans/:id"
 						element={<HostVanDetail />}
 						loader={hostVanDetailLoader}
 					>
-						<Route
-							index
-							element={<HostVanInfo />}
-							loader={async () => {
-								return null;
-							}}
-						/>
-						<Route
-							path="pricing"
-							element={<HostVanPricing />}
-							loader={async () => {
-								return null;
-							}}
-						/>
-						<Route
-							path="photos"
-							element={<HostVanPhotos />}
-							loader={async () => {
-								return null;
-							}}
-						/>
+						<Route index element={<HostVanInfo />} />
+						<Route path="pricing" element={<HostVanPricing />} />
+						<Route path="photos" element={<HostVanPhotos />} />
 					</Route>
-					<Route
-						path="reviews"
-						element={<Reviews />}
-						loader={async () => {
-							return null;
-						}}
-					/>
+					<Route path="reviews" element={<Reviews />} />
 				</Route>
 				<Route path="*" element={<NotFound />} />
 			</Route>
