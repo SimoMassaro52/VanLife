@@ -12,8 +12,6 @@ function Vans() {
 	//We won't need to use a useEffect() anymore
 	const vansData = useLoaderData();
 
-	console.log(vansData);
-
 	const [searchParams, setSearchParams] = useSearchParams();
 
 	const typeFilter = searchParams.get("type");

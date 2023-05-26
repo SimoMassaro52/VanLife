@@ -1,12 +1,10 @@
 import "./App.css";
 import {
-	Routes,
 	Route,
 	RouterProvider,
 	createBrowserRouter,
 	//A super useful method for avoiding writing the extensive array of object if we have the route elements already defined is createRoutesFromElements
 	createRoutesFromElements,
-	redirect,
 } from "react-router-dom";
 
 import Layout from "./components/Layout";
@@ -39,7 +37,7 @@ import { requireAuth } from "./utils";
 
 console.log(requireAuth());
 
-function App() {
+export default function App() {
 	const router = createBrowserRouter(
 		//This method just turns the classic routes into an array of objects readable by createBrowserRouter()
 		createRoutesFromElements(
@@ -47,6 +45,8 @@ function App() {
 				<Route index element={<Home />} />
 
 				<Route path="about" element={<About />} />
+				<Route path="login" element={<Login />} />
+
 				<Route
 					path="vans"
 					element={<Vans />}
@@ -59,7 +59,6 @@ function App() {
 					element={<VanDetail />}
 					loader={vanDetailLoader}
 				/>
-				<Route path="login" element={<Login />} />
 
 				<Route path="host" element={<HostLayout />}>
 					<Route
@@ -86,5 +85,3 @@ function App() {
 	);
 	return <RouterProvider router={router} />;
 }
-
-export default App;

@@ -1,17 +1,18 @@
 import "../../App.css";
+import { requireAuth } from "../../utils";
 
 //Code has been refactored to accomodate loaders
 
 import { Link, useLoaderData } from "react-router-dom";
 import { getHostVans } from "../../api";
 
-export function loader() {
+export async function loader() {
+	await requireAuth();
 	return getHostVans();
 }
 
 export default function HostVans() {
 	const vansData = useLoaderData();
-	console.log(vansData);
 
 	const vanElements = vansData.map((van) => (
 		<Link to={van.id} key={van.id}>
