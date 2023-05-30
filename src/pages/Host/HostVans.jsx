@@ -1,14 +1,12 @@
 import "../../App.css";
-import { requireAuth } from "../../utils";
 
 //Code has been refactored to accomodate loaders
 
 import { Link, useLoaderData } from "react-router-dom";
 import { getHostVans } from "../../api";
 
-export async function loader() {
-	await requireAuth();
-	return getHostVans();
+export function loader() {
+	return getVans();
 }
 
 export default function HostVans() {
