@@ -5,6 +5,7 @@ import { createServer, Model, Response } from "miragejs";
 createServer({
 	models: {
 		vans: Model,
+		users: Model,
 	},
 	//Database seeding mockup
 	seeds(server) {
@@ -74,6 +75,13 @@ createServer({
 			type: "rugged",
 			hostId: "123",
 		});
+		//User creation
+		server.create("user", {
+			id: "123",
+			email: "s@m.com",
+			password: "123",
+			name: "User",
+		});
 	},
 	routes() {
 		this.namespace = "api";
@@ -97,6 +105,23 @@ createServer({
 		this.get("/host/vans/:id", (schema, request) => {
 			const id = request.params.id;
 			return schema.vans.where({ id, hostId: "123" });
+		});
+
+		this.post("/login", (schema, request) => {
+			const { email, password } = JSON.parse(request.requestBody);
+			const foundUser = schema.users.findBy({ email, password });
+			if (!foundUser) {
+				return new Response(
+					401,
+					{},
+					{ message: "No user with those credentials found!" }
+				);
+			}
+			foundUser.password = undefined;
+			return {
+				user: foundUser,
+				token: "Enjoy your pizza, here's your tokens.",
+			};
 		});
 	},
 });
