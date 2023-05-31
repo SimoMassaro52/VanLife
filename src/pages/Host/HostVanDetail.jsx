@@ -13,8 +13,10 @@ import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { getHostVans } from "../../api";
+import { requireAuth } from "../../utils";
 
-export function loader({ params }) {
+export async function loader({ params }) {
+	await requireAuth();
 	return getHostVans(params.id);
 }
 

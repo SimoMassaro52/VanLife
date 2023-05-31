@@ -4,9 +4,12 @@ import "../../App.css";
 
 import { Link, useLoaderData } from "react-router-dom";
 import { getHostVans } from "../../api";
+import { requireAuth } from "../../utils";
 
-export function loader() {
-	return getVans();
+//In order for the authentication check to work in a component that receives data, we need to import the functiojn and tell the loader to await it and after that return the data
+export async function loader() {
+	await requireAuth();
+	return getHostVans();
 }
 
 export default function HostVans() {

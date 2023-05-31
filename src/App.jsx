@@ -11,7 +11,7 @@ import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import About from "./pages/About";
-import Login from "./pages/Login";
+import Login, { loader as loginLoader } from "./pages/Login";
 
 //We can import the loader function and change its name in the context of the master component App.jsx to be more specific
 import Vans, { loader as vansLoader } from "./pages/Vans/Vans";
@@ -43,7 +43,7 @@ export default function App() {
 				<Route index element={<Home />} />
 
 				<Route path="about" element={<About />} />
-				<Route path="login" element={<Login />} />
+				<Route path="login" element={<Login />} loader={loginLoader} />
 
 				<Route
 					path="vans"
@@ -62,9 +62,14 @@ export default function App() {
 					<Route
 						index
 						element={<Dashboard />}
+						//We are going to make the component load after checking for the user authentication
 						loader={async () => await requireAuth()}
 					/>
-					<Route path="income" element={<Income />} />
+					<Route
+						path="income"
+						element={<Income />}
+						loader={async () => await requireAuth()}
+					/>
 					<Route path="vans" element={<HostVans />} loader={hostVansLoader} />
 					<Route
 						path="vans/:id"
