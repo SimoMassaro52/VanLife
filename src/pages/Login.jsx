@@ -1,10 +1,20 @@
 import "../App.css";
 import { loginUser } from "../api";
 import { useState } from "react";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { useLoaderData, useNavigate, Form } from "react-router-dom";
+
+//Code has been refactored after implementing action
 
 export function loader({ request }) {
 	return new URL(request.url).searchParams.get("message");
+}
+
+export async function action({ request }) {
+	const formData = await request.formData();
+	const email = formData.get("email");
+	const password = formData.get("password");
+	console.log(email, password);
+	return null;
 }
 
 export default function Login() {
@@ -51,7 +61,7 @@ export default function Login() {
 					<h2>Sign in to your account</h2>
 				)}
 				{error && <h3>{error.message}</h3>}
-				<form className="login-form" onSubmit={handleSubmit}>
+				<Form method="post" className="login-form">
 					<input
 						type="email"
 						placeholder="Email address"
@@ -70,7 +80,7 @@ export default function Login() {
 					<button id="login-btn" disabled={status === "submitting"}>
 						{status === "submitting" ? "Logging in..." : "Log in"}
 					</button>
-				</form>
+				</Form>
 				<div>
 					<p className="create-now">
 						Don’t have an account? <span>Create one now</span>

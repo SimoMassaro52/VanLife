@@ -11,7 +11,10 @@ import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import About from "./pages/About";
-import Login, { loader as loginLoader } from "./pages/Login";
+import Login, {
+	loader as loginLoader,
+	action as loginAction,
+} from "./pages/Login";
 
 //We can import the loader function and change its name in the context of the master component App.jsx to be more specific
 import Vans, { loader as vansLoader } from "./pages/Vans/Vans";
@@ -43,7 +46,12 @@ export default function App() {
 				<Route index element={<Home />} />
 
 				<Route path="about" element={<About />} />
-				<Route path="login" element={<Login />} loader={loginLoader} />
+				<Route
+					path="login"
+					element={<Login />}
+					loader={loginLoader}
+					action={loginAction}
+				/>
 
 				<Route
 					path="vans"
