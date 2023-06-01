@@ -1,7 +1,7 @@
 import "../App.css";
 import { loginUser } from "../api";
 import { useState } from "react";
-import { useLoaderData, useNavigate, Form } from "react-router-dom";
+import { useLoaderData, useNavigate, Form, redirect } from "react-router-dom";
 
 //Code has been refactored after implementing action
 
@@ -13,16 +13,17 @@ export async function action({ request }) {
 	const formData = await request.formData();
 	const email = formData.get("email");
 	const password = formData.get("password");
-	console.log(email, password);
-	return null;
+	const data = await loginUser({ email, password });
+	//To make a "better" fake auth we are going to save a boolean to local storage and check for it in requireAuth
+	localStorage.setItem("isLoggedIn", true);
+
+	console.log(data);
+	const response = redirect("/host");
+	response.body = true;
+	return response;
 }
 
 export default function Login() {
-	const [loginFormData, setLoginFormData] = useState({
-		email: "",
-		password: "",
-	});
-
 	const message = useLoaderData();
 
 	//This status state will be used to disable the log in button until the login actually happens
@@ -34,23 +35,14 @@ export default function Login() {
 	//We are going to use the useNavigate() hook to redirect the user to the host page if the log in is successfull (switch isLoggedIn to true in utils.js)
 	const navigate = useNavigate();
 
-	function handleSubmit(e) {
-		setStatus("submitting");
-		e.preventDefault();
-		loginUser(loginFormData)
-			.then((data) => navigate("/host"))
-			.catch((err) => setError(err))
-			.finally(() => setStatus("idle"));
-		setError(null);
-	}
-
-	function handleChange(e) {
-		const { name, value } = e.target;
-		setLoginFormData((prev) => ({
-			...prev,
-			[name]: value,
-		}));
-	}
+	// function handleSubmit(e) {
+	// 	setStatus("submitting");
+	// 	e.preventDefault();
+	// 		.then((data) => navigate("/host"))
+	// 		.catch((err) => setError(err))
+	// 		.finally(() => setStatus("idle"));
+	// 	setError(null);
+	// }
 
 	return (
 		<>
@@ -61,21 +53,14 @@ export default function Login() {
 					<h2>Sign in to your account</h2>
 				)}
 				{error && <h3>{error.message}</h3>}
-				<Form method="post" className="login-form">
-					<input
-						type="email"
-						placeholder="Email address"
-						name="email"
-						onChange={handleChange}
-						value={loginFormData.email}
-					/>
-					<input
-						type="password"
-						placeholder="Password"
-						name="password"
-						onChange={handleChange}
-						value={loginFormData.password}
-					/>
+				<Form
+					method="post"
+					className="login-form"
+					// If the user logs in and presses the back button, he's going to end back to the log in page. To avoid that we want to remove the page from the history stack. Since the Form is considered a navigation instance as well we need to add the replace prop to clear the history stack
+					replace
+				>
+					<input type="email" placeholder="Email address" name="email" />
+					<input type="password" placeholder="Password" name="password" />
 					{/* Disabling the button depending on the state of the form submission */}
 					<button id="login-btn" disabled={status === "submitting"}>
 						{status === "submitting" ? "Logging in..." : "Log in"}
