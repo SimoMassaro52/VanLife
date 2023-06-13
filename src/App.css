@@ -609,6 +609,11 @@ footer {
 	cursor: pointer;
 }
 
+.login-form button:disabled {
+	background-color: gray;
+	cursor: default;
+}
+
 .create-now {
 	font-weight: 600;
 }
