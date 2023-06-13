@@ -34,7 +34,6 @@ import HostVanDetail, {
 import HostVanInfo from "./pages/Host/Hostvan/HostVanInfo";
 import HostVanPricing from "./pages/Host/Hostvan/HostVanPricing";
 import HostVanPhotos from "./pages/Host/Hostvan/HostVanPhotos";
-localStorage.removeItem("isLoggedIn");
 //Since we want to check for authentication in multiple routes, we can create a utility function that will check if the user is logged in and paste it in each route. We are going to store our utility function in a separate JS file to avoid bulky code
 import { requireAuth } from "./utils";
 
