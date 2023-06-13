@@ -1,12 +1,5 @@
 import "../../App.css";
-import {
-	useParams,
-	Link,
-	Outlet,
-	NavLink,
-	useLoaderData,
-} from "react-router-dom";
-import { useState, useEffect } from "react";
+import { Link, Outlet, NavLink, useLoaderData } from "react-router-dom";
 
 //Code has been refactored to accomodate loaders
 
@@ -15,8 +8,8 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { getHostVans } from "../../api";
 import { requireAuth } from "../../utils";
 
-export async function loader({ params }) {
-	await requireAuth();
+export async function loader({ params, request }) {
+	await requireAuth(request);
 	return getHostVans(params.id);
 }
 

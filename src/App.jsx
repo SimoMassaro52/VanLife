@@ -34,7 +34,7 @@ import HostVanDetail, {
 import HostVanInfo from "./pages/Host/Hostvan/HostVanInfo";
 import HostVanPricing from "./pages/Host/Hostvan/HostVanPricing";
 import HostVanPhotos from "./pages/Host/Hostvan/HostVanPhotos";
-
+localStorage.removeItem("isLoggedIn");
 //Since we want to check for authentication in multiple routes, we can create a utility function that will check if the user is logged in and paste it in each route. We are going to store our utility function in a separate JS file to avoid bulky code
 import { requireAuth } from "./utils";
 
@@ -70,13 +70,13 @@ export default function App() {
 					<Route
 						index
 						element={<Dashboard />}
-						//We are going to make the component load after checking for the user authentication
-						loader={async () => await requireAuth()}
+						//We are going to make the component load AFTER checking for the user authentication
+						loader={async ({ request }) => await requireAuth(request)}
 					/>
 					<Route
 						path="income"
 						element={<Income />}
-						loader={async () => await requireAuth()}
+						loader={async ({ request }) => await requireAuth(request)}
 					/>
 					<Route path="vans" element={<HostVans />} loader={hostVansLoader} />
 					<Route
@@ -84,11 +84,27 @@ export default function App() {
 						element={<HostVanDetail />}
 						loader={hostVanDetailLoader}
 					>
-						<Route index element={<HostVanInfo />} />
-						<Route path="pricing" element={<HostVanPricing />} />
-						<Route path="photos" element={<HostVanPhotos />} />
+						<Route
+							index
+							element={<HostVanInfo />}
+							loader={async ({ request }) => await requireAuth(request)}
+						/>
+						<Route
+							path="pricing"
+							element={<HostVanPricing />}
+							loader={async ({ request }) => await requireAuth(request)}
+						/>
+						<Route
+							path="photos"
+							element={<HostVanPhotos />}
+							loader={async ({ request }) => await requireAuth(request)}
+						/>
 					</Route>
-					<Route path="reviews" element={<Reviews />} />
+					<Route
+						path="reviews"
+						element={<Reviews />}
+						loader={async ({ request }) => await requireAuth(request)}
+					/>
 				</Route>
 				<Route path="*" element={<NotFound />} />
 			</Route>

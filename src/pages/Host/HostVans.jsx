@@ -7,8 +7,8 @@ import { getHostVans } from "../../api";
 import { requireAuth } from "../../utils";
 
 //In order for the authentication check to work in a component that receives data, we need to import the functiojn and tell the loader to await it and after that return the data
-export async function loader() {
-	await requireAuth();
+export async function loader({ request }) {
+	await requireAuth(request);
 	return getHostVans();
 }
 
