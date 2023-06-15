@@ -7,7 +7,39 @@ import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { requireAuth } from "../../utils";
 import { getHostVans } from "../../api";
 
+export async function loader({ request }) {
+	await requireAuth(request);
+	return defer({ vans: getHostVans() });
+}
+
 function Dashboard() {
+	const loaderData = useLoaderData();
+
+	function renderVans(vans) {
+		const hostVanElements = vans.map((van) => (
+			<div className="dashboard-van-tile" key={van.id}>
+				<div className="host-van-tile">
+					<div className="host-van-l">
+						<img src={van.imageUrl} />
+						<div className="host-van-txt">
+							<span>{van.name}</span>
+							<p>
+								${van.price}
+								<span>/day</span>
+							</p>
+						</div>
+					</div>
+
+					<div>
+						<Link className="dash-links" to={`vans/${van.id}`}>
+							Edit
+						</Link>
+					</div>
+				</div>
+			</div>
+		));
+		return <div className="dashboard-van-wrapper">{hostVanElements}</div>;
+	}
 	return (
 		<>
 			<section className="dashboard-earnings">
@@ -37,12 +69,14 @@ function Dashboard() {
 				</Link>
 			</section>
 			<section className="dashboard-vans">
-				<div className="top">
+				<div className="listed-vans-title">
 					<h2>Your listed vans</h2>
-					<Link to="vans">View all</Link>
+					<Link to="vans" className="dash-links">
+						View all
+					</Link>
 				</div>
 				<Suspense fallback={<h3>Loading...</h3>}>
-					<Await></Await>
+					<Await resolve={loaderData.vans}>{renderVans}</Await>
 				</Suspense>
 			</section>
 		</>

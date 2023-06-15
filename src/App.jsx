@@ -23,7 +23,9 @@ import VanDetail, { loader as vanDetailLoader } from "./pages/Vans/VanDetail";
 import Error from "./components/Error";
 
 import HostLayout from "./components/HostLayout";
-import Dashboard from "./pages/Host/Dashboard";
+import Dashboard, {
+	loader as dashboardVansLoader,
+} from "./pages/Host/Dashboard";
 import Income from "./pages/Host/Income";
 import Reviews from "./pages/Host/Reviews";
 
@@ -67,15 +69,11 @@ export default function App() {
 				/>
 
 				<Route path="host" element={<HostLayout />}>
-					<Route
-						index
-						element={<Dashboard />}
-						//We are going to make the component load AFTER checking for the user authentication
-						loader={async ({ request }) => await requireAuth(request)}
-					/>
+					<Route index element={<Dashboard />} loader={dashboardVansLoader} />
 					<Route
 						path="income"
 						element={<Income />}
+						//We are going to make the component load AFTER checking for the user authentication
 						loader={async ({ request }) => await requireAuth(request)}
 					/>
 					<Route
