@@ -13,12 +13,12 @@ import {
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { getHostVans } from "../../api";
+import { getSingleVan } from "../../api";
 import { requireAuth } from "../../utils";
 
 export async function loader({ params, request }) {
 	await requireAuth(request);
-	const hostVansPromise = getHostVans(params.id);
+	const hostVansPromise = getSingleVan(params.id);
 	return defer({ vans: hostVansPromise });
 }
 
@@ -39,7 +39,7 @@ export default function HostVanDetail() {
 				<Suspense callback={<h1>Loading...</h1>}>
 					<Await resolve={loadedVans.vans}>
 						{(loadedData) => {
-							const van = loadedData[0];
+							const van = loadedData;
 							return (
 								<div className="host-van-detail">
 									<div className="host-van-img-box">

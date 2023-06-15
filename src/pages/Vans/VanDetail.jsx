@@ -1,7 +1,7 @@
 import "../../App.css";
 
 //Code has been refactored to accomodate loader functions
-import { getVans } from "../../api";
+import { getSingleVan } from "../../api";
 import {
 	useParams,
 	Link,
@@ -17,7 +17,7 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 //Since we need access to the vans id we want to display, loaders has access to an object called params that receives the data from the parent route
 export function loader({ params }) {
-	const vanPromise = getVans(params.id);
+	const vanPromise = getSingleVan(params.id);
 	return defer({ van: vanPromise });
 }
 

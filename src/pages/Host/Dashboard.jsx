@@ -1,9 +1,11 @@
 import "../../App.css";
 
 import { Suspense } from "react";
-import { Link, Await } from "react-router-dom";
+import { Link, defer, Await, useLoaderData } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { requireAuth } from "../../utils";
+import { getHostVans } from "../../api";
 
 function Dashboard() {
 	return (
