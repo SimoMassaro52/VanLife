@@ -5,7 +5,7 @@ function Footer() {
 		<>
 			<footer>
 				<div className="footer-box">
-					<span>&copy; 2022 #VANLIFE</span>
+					<span>&copy; 2023 #VANLIFE</span>
 				</div>
 			</footer>
 		</>
