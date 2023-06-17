@@ -750,3 +750,59 @@ footer {
 .transaction h3 {
 	font-size: 30px;
 }
+
+/* Host reviews */
+
+.host-reviews-wrapper {
+	padding: 0px 20px;
+}
+
+.reviews-title {
+	display: flex;
+	align-items: baseline;
+}
+
+.reviews-title h1 {
+	margin-right: 10px;
+}
+
+.reviews-title p {
+	color: #4d4d4d;
+}
+
+.reviews-title p span {
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+.reviews-wrapper {
+	margin: 20px 0;
+}
+
+.single-review {
+	margin-bottom: 20px;
+}
+
+.review-stars {
+	margin-bottom: 10px;
+}
+
+.review-title {
+	margin-bottom: 10px;
+}
+
+.review-user {
+	font-weight: 600;
+	margin-right: 10px;
+}
+
+.review-date {
+	color: #8c8c8c;
+}
+
+.single-review hr {
+	border: none;
+	height: 1px;
+	margin: 20px 0;
+	background-color: #c7c7c7;
+}
