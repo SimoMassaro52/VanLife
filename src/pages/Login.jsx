@@ -21,12 +21,9 @@ export async function action({ request }) {
 	const password = formData.get("password");
 	const path = new URL(request.url).searchParams.get("redirectTo") || "/host";
 	try {
-		const data = await loginUser({ email, password });
 		//To make a "better" fake auth we are going to save a boolean to local storage and check for it in requireAuth
 		localStorage.setItem("isLoggedIn", true);
-		const response = redirect(path);
-		response.body = true;
-		return response;
+		return redirect(path);
 	} catch (err) {
 		return err.message;
 	}

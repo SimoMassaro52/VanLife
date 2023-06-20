@@ -11,8 +11,8 @@ import {
 	getDoc,
 	query,
 	where,
+	snapshotEqual,
 } from "firebase/firestore/lite";
-import { Collection } from "miragejs";
 
 const firebaseConfig = {
 	apiKey: "AIzaSyDBHMSiGdcvaqG6nwFdGqnY_zePi8N_wDw",
@@ -64,6 +64,23 @@ export async function getHostVans() {
 	}));
 	return dataArray;
 }
+
+//Users collection
+const usersCollection = collection(db, "users");
+
+getDocs(usersCollection)
+	.then((snapshot) => {
+		let usersArr = [];
+		snapshot.docs.forEach((doc) => {
+			usersArr.push({ ...doc.data(), id: doc.id });
+		});
+		console.log(usersArr);
+	})
+	.catch((err) => {
+		console.log(err.message);
+	});
+
+export async function addNewUser() {}
 
 export async function loginUser(creds) {
 	const res = await fetch("/api/login", {
