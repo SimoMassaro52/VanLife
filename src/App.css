@@ -574,15 +574,45 @@ footer {
 	align-items: center;
 }
 
-.login-form {
+.login-form,
+.register-form {
 	padding: 40px 0;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	width: 100%;
+	max-width: 500px;
 }
 
-.login-form input {
+.field-psw-box {
+	position: relative;
+}
+
+.field-icon {
+	position: absolute;
+	top: 28%;
+	right: 4%;
+	cursor: pointer;
+}
+
+.form-input {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	margin: 10px 0;
+}
+
+.form-input label {
+	margin: 5px 0;
+}
+
+.form-input input {
+	align-self: center;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
 	width: 100%;
 	max-width: 500px;
 	padding: 8px;
@@ -594,15 +624,16 @@ footer {
 	border-radius: 5px 5px 0 0;
 }
 
-.login-form input:nth-child(2) {
+.login-form input:last-of-type {
 	border-radius: 0 0 5px 5px;
 }
 
-.login-form input:focus {
+input:focus {
 	outline: none;
 }
 
-.login-form button {
+.login-form button,
+.register-form button {
 	background-color: #ff8c38;
 	font-weight: 700;
 	border-radius: 5px;
@@ -624,8 +655,20 @@ footer {
 	font-weight: 600;
 }
 
-.create-now span {
+.create-now a {
 	color: #ff8c38;
+}
+
+/* Register */
+
+.psw-checkbox {
+	margin: 10px 0;
+	display: flex;
+}
+
+.psw-checkbox * {
+	margin: 0 6px;
+	font-size: 14px;
 }
 
 /* Dashboard */

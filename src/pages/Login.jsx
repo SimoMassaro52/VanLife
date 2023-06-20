@@ -1,12 +1,11 @@
 import "../App.css";
-import { loginUser } from "../api";
 import {
 	useLoaderData,
-	useNavigate,
 	Form,
 	redirect,
 	useActionData,
 	useNavigation,
+	Link,
 } from "react-router-dom";
 
 //Code has been refactored after implementing action
@@ -60,7 +59,7 @@ export default function Login() {
 				</Form>
 				<div>
 					<p className="create-now">
-						Don’t have an account? <span>Create one now</span>
+						Don’t have an account? <Link to="/register">Create one now</Link>
 					</p>
 				</div>
 			</main>

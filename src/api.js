@@ -11,7 +11,7 @@ import {
 	getDoc,
 	query,
 	where,
-	snapshotEqual,
+	addDoc,
 } from "firebase/firestore/lite";
 
 const firebaseConfig = {
@@ -80,7 +80,13 @@ getDocs(usersCollection)
 		console.log(err.message);
 	});
 
-export async function addNewUser() {}
+export async function addNewUser(creds) {
+	addDoc(usersCollection, {
+		name: creds.name,
+		email: creds.email,
+		password: creds.psw,
+	});
+}
 
 export async function loginUser(creds) {
 	const res = await fetch("/api/login", {

@@ -41,7 +41,7 @@ function Navbar() {
 					>
 						<FontAwesomeIcon icon={faCircleUser} />
 					</NavLink>
-					<button onClick={fakeLogOut()}>x</button>
+					{/* <button onClick={fakeLogOut()}>x</button> */}
 				</div>
 			</nav>
 		</>

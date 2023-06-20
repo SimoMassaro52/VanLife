@@ -15,6 +15,7 @@ import Login, {
 	loader as loginLoader,
 	action as loginAction,
 } from "./pages/Login";
+import Register, { action as registerAction } from "./pages/Register";
 
 //We can import the loader function and change its name in the context of the master component App.jsx to be more specific
 import Vans, { loader as vansLoader } from "./pages/Vans/Vans";
@@ -53,6 +54,7 @@ export default function App() {
 					loader={loginLoader}
 					action={loginAction}
 				/>
+				<Route path="register" element={<Register />} action={registerAction} />
 
 				<Route
 					path="vans"
