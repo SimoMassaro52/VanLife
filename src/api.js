@@ -12,7 +12,19 @@ import {
 	query,
 	where,
 	addDoc,
-} from "firebase/firestore/lite";
+	serverTimestamp,
+	orderBy,
+	onSnapshot,
+} from "firebase/firestore";
+
+// User authorization imports
+import {
+	getAuth,
+	createUserWithEmailAndPassword,
+	signOut,
+	signInWithEmailAndPassword,
+	onAuthStateChanged,
+} from "firebase/auth";
 
 const firebaseConfig = {
 	apiKey: "AIzaSyDBHMSiGdcvaqG6nwFdGqnY_zePi8N_wDw",
@@ -28,6 +40,8 @@ const app = initializeApp(firebaseConfig);
 //We then initialize our database variable by passing the app variable
 const db = getFirestore(app);
 
+const auth = getAuth(app);
+
 //This is a totally optional step but just for the sake of clarity, we are going to reference our collection in a separate variable
 const vansCollection = collection(db, "vans");
 
@@ -42,7 +56,6 @@ export async function getVans() {
 }
 
 //Single van function (can also be used for host van detail page)
-
 export async function getSingleVan(id) {
 	const docRef = doc(db, "vans", id);
 	const vanSnapshot = await getDoc(docRef);
@@ -65,41 +78,65 @@ export async function getHostVans() {
 	return dataArray;
 }
 
-//Users collection
+//Users collection reference
 const usersCollection = collection(db, "users");
 
-getDocs(usersCollection)
-	.then((snapshot) => {
-		let usersArr = [];
-		snapshot.docs.forEach((doc) => {
-			usersArr.push({ ...doc.data(), id: doc.id });
-		});
-		console.log(usersArr);
-	})
-	.catch((err) => {
-		console.log(err.message);
+const usersQuery = query(usersCollection, orderBy("createdAt"));
+
+//Real time data collection
+onSnapshot(usersQuery, (snapshot) => {
+	let users = [];
+	snapshot.docs.forEach((doc) => {
+		users.push({ ...doc.data(), id: doc.id });
 	});
+});
+
+export async function requireAuth(request) {
+	const pathname = new URL(request.url).pathname;
+	const isLoggedIn = localStorage.getItem("isLoggedIn");
+	if (!isLoggedIn) {
+		//This is a workaround as suggested in https://github.com/scrimba/learn-react-router-6#april-21-2023 to make the redirect work when using the MirageJS library
+		throw redirect(
+			`/login?message=You must log in first&redirectTo=${pathname}`
+		);
+	}
+	return null;
+}
 
 export async function addNewUser(creds) {
+	localStorage.setItem("isLoggedIn", true);
+	createUserWithEmailAndPassword(auth, creds.email, creds.psw)
+		.then((cred) => console.log("user created", cred.user))
+		.catch((err) => {
+			console.log(err.message);
+		});
 	addDoc(usersCollection, {
 		name: creds.name,
 		email: creds.email,
-		password: creds.psw,
+		//Creates a timestamp of when the doc is generated
+		createdAt: serverTimestamp(),
 	});
 }
 
-export async function loginUser(creds) {
-	const res = await fetch("/api/login", {
-		method: "post",
-		body: JSON.stringify(creds),
-	});
-	const data = await res.json();
-	if (!res.ok) {
-		throw {
-			message: data.message,
-			statusText: res.statusText,
-			status: res.status,
-		};
-	}
-	return data;
+export async function logoutUser() {
+	localStorage.removeItem("isLoggedIn");
+	signOut(auth)
+		.then(() => {
+			console.log("user signed out");
+		})
+		.catch((err) => console.log(err.message));
 }
+
+export async function loginUser(creds) {
+	try {
+		const cred = await signInWithEmailAndPassword(auth, creds.email, creds.psw);
+		localStorage.setItem("isLoggedIn", true);
+	} catch (err) {
+		console.log(err.message);
+		console.log(err.code);
+	}
+}
+
+// onAuthStateChanged(auth, (user) => {
+// 	console.log("user status changed");
+// });

@@ -1,7 +1,15 @@
 import "../App.css";
-import { Outlet, NavLink } from "react-router-dom";
+import { Outlet, NavLink, redirect, useNavigate } from "react-router-dom";
+import { logoutUser } from "../api";
 
 function HostLayout() {
+	const navigate = useNavigate();
+	async function logOut() {
+		await logoutUser();
+		console.log(localStorage.getItem("isLoggedIn"));
+		navigate("/login");
+		return null;
+	}
 	return (
 		<>
 			<main>
@@ -34,6 +42,7 @@ function HostLayout() {
 						>
 							Reviews
 						</NavLink>
+						<button onClick={logOut}>Log out</button>
 					</div>
 				</nav>
 				<Outlet />

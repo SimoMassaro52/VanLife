@@ -1,6 +1,6 @@
 import "../App.css";
 import { useState } from "react";
-import { Form } from "react-router-dom";
+import { Form, useActionData, redirect } from "react-router-dom";
 import { addNewUser } from "../api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
@@ -10,22 +10,26 @@ export async function action({ request }) {
 	const name = formData.get("name");
 	const email = formData.get("email");
 	const psw = formData.get("password");
-	addNewUser({ name, email, psw });
-	console.log(formData);
-	return formData;
+	try {
+		addNewUser({ name, email, psw });
+		return redirect("/host");
+	} catch (err) {
+		return err.message;
+	}
 }
-
-function showPsw() {}
 
 export default function Register() {
 	const [checked, setChecked] = useState(false);
 	function handleChange() {
 		setChecked(!checked);
 	}
+
+	const errorMsg = useActionData();
 	return (
 		<>
 			<main className="login-wrapper">
 				<h2>Create your Vanlife account</h2>
+				{errorMsg && <h3>{errorMsg}</h3>}
 				<Form method="post" className="register-form" replace>
 					<div className="form-input">
 						<label>Username: </label>
@@ -47,6 +51,7 @@ export default function Register() {
 								type={checked ? "text" : "password"}
 								placeholder="Choose a password"
 								name="password"
+								minLength="6"
 								required
 							/>
 							<FontAwesomeIcon
@@ -66,7 +71,7 @@ export default function Register() {
 							/>
 						</label>
 					</div> */}
-					<button id="login-btn">Create</button>
+					<button id="login-btn">Sign me up!</button>
 				</Form>
 			</main>
 		</>

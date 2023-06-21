@@ -7,6 +7,7 @@ import {
 	useNavigation,
 	Link,
 } from "react-router-dom";
+import { loginUser } from "../api";
 
 //Code has been refactored after implementing action
 
@@ -17,11 +18,10 @@ export function loader({ request }) {
 export async function action({ request }) {
 	const formData = await request.formData();
 	const email = formData.get("email");
-	const password = formData.get("password");
+	const psw = formData.get("password");
 	const path = new URL(request.url).searchParams.get("redirectTo") || "/host";
+	loginUser({ email, psw });
 	try {
-		//To make a "better" fake auth we are going to save a boolean to local storage and check for it in requireAuth
-		localStorage.setItem("isLoggedIn", true);
 		return redirect(path);
 	} catch (err) {
 		return err.message;
@@ -50,8 +50,18 @@ export default function Login() {
 					// If the user logs in and presses the back button, he's going to end back to the log in page. To avoid that we want to remove the page from the history stack. Since the Form is considered a navigation instance as well we need to add the replace prop to clear the history stack
 					replace
 				>
-					<input type="email" placeholder="Email address" name="email" />
-					<input type="password" placeholder="Password" name="password" />
+					<input
+						type="email"
+						placeholder="Email address"
+						name="email"
+						required
+					/>
+					<input
+						type="password"
+						placeholder="Password"
+						name="password"
+						required
+					/>
 					{/* Disabling the button depending on the state of the form submission */}
 					<button id="login-btn" disabled={navigation.state === "submitting"}>
 						{navigation.state === "submitting" ? "Logging in..." : "Log in"}
