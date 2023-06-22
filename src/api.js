@@ -1,3 +1,4 @@
+import { redirect } from "react-router-dom";
 //Code has been refactored to implement Firebase
 
 //This import allows us to connect to our app in Firebase.
@@ -95,7 +96,6 @@ export async function requireAuth(request) {
 	const pathname = new URL(request.url).pathname;
 	const isLoggedIn = localStorage.getItem("isLoggedIn");
 	if (!isLoggedIn) {
-		//This is a workaround as suggested in https://github.com/scrimba/learn-react-router-6#april-21-2023 to make the redirect work when using the MirageJS library
 		throw redirect(
 			`/login?message=You must log in first&redirectTo=${pathname}`
 		);
